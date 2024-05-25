@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id            Int          @id @unique @default(autoincrement())
+  name               String
+  address_city       String
+  address_state      String
+  address_street     String
+  address_number     Int
+  address_complement String
+  status             UserStatus
+  transporter        Transporter?
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
+
+model Transporter {
+  transporter_id Int        @id @unique @default(autoincrement())
+  cpf            String
+  document_front String
+  document_back  String
+  score_points   Int
+  user_id        Int        @unique
+  user           User       @relation(fields: [user_id], references: [user_id])
+  Delivery       Delivery[]
+}
+
+model Donation {
+  donation_id           Int          @id @unique @default(autoincrement())
+  type                  DonationType
+  quantity              Int
+  weight                Decimal      @db.Decimal(7, 2)
+  points                Int
+  from_latitude         Decimal      @db.Decimal(10, 7)
+  from_longitude        Decimal      @db.Decimal(10, 7)
+  destination_latitude  Decimal      @db.Decimal(10, 7)
+  destination_longitude Decimal      @db.Decimal(10, 7)
+  Delivery              Delivery[]
+}
+
+model Delivery {
+  delivery_id        Int       @id @unique @default(autoincrement())
+  transporter_id     Int
+  donation_id        Int
+  accepted_at        DateTime  @default(now())
+  started_at         DateTime?
+  finished_at        DateTime?
+  gps_final_location String?
+  delivery_proof     String?
+
+  transporter Transporter @relation(fields: [transporter_id], references: [transporter_id])
+  donation    Donation    @relation(fields: [donation_id], references: [donation_id])
+}
+
+enum DonationType {
+  TESTE
+}
