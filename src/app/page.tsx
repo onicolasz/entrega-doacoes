@@ -36,8 +36,6 @@ export default function Home() {
   const { user, updateUser } = useContext(UserContext);
   const { push } = useRouter();
 
-  console.log("plau", session);
-
   if (status === "unauthenticated") {
     push("/login");
   }
@@ -48,8 +46,8 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-14">
-      <div className="bg-green-700 border-gradient min-h-screen rounded-t-xl w-[750px]">
-        <p className="text-2xl text-white font-semibold py-4 pl-4">
+      <div className="min-h-screen w-[700px]">
+        <p className="text-2xl text-black font-semibold py-4 pl-4">
           Esperando entregador
         </p>
         {data.map((item, index) => (
