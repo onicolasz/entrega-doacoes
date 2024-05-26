@@ -4,6 +4,8 @@ import { UserContext } from "@/app/contexts/user.context";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { usePathname } from 'next/navigation'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 import ProfileButton from "./ProfileButton";
 
 export default function NavBar() {
@@ -19,18 +21,21 @@ export default function NavBar() {
         <ul className="flex h-full items-center">
           <li
             onClick={() => push("/")}
-            className="h-full items-center flex self-center rounded-2xl p-4 cursor-pointer hover:bg-green-600 hover:font-semibold"
+            className="h-full items-center flex self-center rounded-2xl p-4 cursor-pointer hover:bg-green-600 hover:font-semibold  active:bg-green-700 duration-100"
           >
-            Home
+            <FontAwesomeIcon
+              icon={faHome}
+              size="lg"
+            />
           </li>
           <li
-            className="h-full items-center flex self-center rounded-2xl p-4 cursor-pointer hover:bg-green-600 hover:font-semibold"
+            className="h-full items-center flex self-center rounded-2xl p-4 cursor-pointer hover:bg-green-600 hover:font-semibold  active:bg-green-700 duration-100"
             onClick={() => push("/doacoes/entregues")}
           >
             Doações entregues
           </li>
           <li
-            className="h-full items-center flex p-4 rounded-2xl cursor-pointer hover:bg-green-600 hover:font-semibold"
+            className="h-full items-center flex p-4 rounded-2xl cursor-pointer hover:bg-green-600 hover:font-semibold  active:bg-green-700 duration-100"
             onClick={() => push("/doacoes/acompanhar")}
           >
             Acompanhar suas doações

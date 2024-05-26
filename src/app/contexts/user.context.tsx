@@ -22,7 +22,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const updateUser = async (email: string) => {
     setUser({
       id: 1,
-      name: "Testolho",
+      name: "Giuseppe Cadura",
       email: email,
       transporter_id: 1,
     });
