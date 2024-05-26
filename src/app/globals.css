@@ -80,4 +80,8 @@
     background: linear-gradient(to right, #def50b, #ff0000);
     border-radius: inherit;
   }
+
+  .custom-shadow {
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+  }
 }
