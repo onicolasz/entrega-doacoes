@@ -27,7 +27,7 @@ export default function RootLayout({
         fontSans.variable
       )}>
         <Providers>
-          <NavBar />
+          <NavBar></NavBar>
           {children}
         </Providers>
       </body>
