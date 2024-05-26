@@ -24,7 +24,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       id: 1,
       name: "Giuseppe Cadura",
       email: email,
-      transporter_id: 1,
+      transporter_id: null,
     });
   };
 
