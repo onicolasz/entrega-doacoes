@@ -27,7 +27,7 @@ type CardProps = {
   items: Item[];
   fromLocation: string;
   destinationLocation: string;
-  deliveryStatus: string;
+  deliveryStatus?: string;
   transporter?: IUser;
 };
 
@@ -111,7 +111,7 @@ const DonationCard: React.FC<CardProps> = ({
           <p className="text-lg"><span className="font-semibold">Total de itens:</span> {totalQuantity}</p>
           <p>Peso total: {totalWeight}kg</p>
         </div>
-        {!!user?.transporter_id && (
+        {(!!user?.transporter_id && !deliveryStatus) && (
           <div>
             <Button className="flex items-center p-1 h-8 mt-1 hover:bg-green-600 hover:font-semibold active:bg-green-700 duration-100 rounded-lg">
               Aceitar entrega

@@ -11,7 +11,7 @@ interface IUser {
 
 type UserContextProps = {
   user: IUser | null;
-  updateUser: (email: string) => void;
+  updateUser: (email?: string) => void;
 };
 
 const UserContext = createContext<UserContextProps>({} as UserContextProps);
@@ -19,13 +19,16 @@ const UserContext = createContext<UserContextProps>({} as UserContextProps);
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
 
-  const updateUser = async (email: string) => {
-    setUser({
-      id: 1,
-      name: "Giuseppe Cadura",
-      email: email,
-      transporter_id: null,
-    });
+  const updateUser = async (email?: string) => {
+    if(email) {
+      setUser({
+        id: 1,
+        name: "Giuseppe Cadura",
+        email: email,
+        transporter_id: null,
+      });
+    }
+    setUser(null)
   };
 
   return (

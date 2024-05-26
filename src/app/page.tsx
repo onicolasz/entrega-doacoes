@@ -3,8 +3,11 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "./contexts/user.context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import DonationCard from "@/components/DonationCard";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import DonationForm from "@/components/DonationForm";
 
 const data = [
   {
@@ -32,6 +35,7 @@ const data = [
 ];
 
 export default function Home() {
+  const [openCreateDonation, setOpenCreateDonation] = useState(false);
   const { data: session, status } = useSession();
   const { user, updateUser } = useContext(UserContext);
   const { push } = useRouter();
@@ -47,9 +51,25 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-14">
       <div className="min-h-screen w-[700px]">
-        <p className="text-2xl text-black font-semibold py-4 pl-4">
-          Esperando entregador
-        </p>
+        <div className="flex flex-row justify-between items-center w-full">
+          <p className="text-2xl text-black font-semibold py-4 pl-4">
+            Esperando entregador
+          </p>
+          <Dialog open={openCreateDonation}>
+            <DialogTrigger asChild>
+              <Button
+                size="lg"
+                className="mr-5 rounded-2xl"
+                onClick={() => setOpenCreateDonation(true)}
+              >
+                Criar Doação
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DonationForm></DonationForm>
+            </DialogContent>
+          </Dialog>
+        </div>
         {data.map((item, index) => (
           <DonationCard
             key={index}

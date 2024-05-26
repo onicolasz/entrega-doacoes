@@ -20,17 +20,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { signOut } from "next-auth/react";
 
 export default function NavBar() {
-  const { user } = useContext(UserContext)
+  const { user, updateUser } = useContext(UserContext)
   const { push } = useRouter();
   const pathname = usePathname()
+
+  const handleLogout = () => {
+    signOut();
+    updateUser(null)
+  }
 
   const options = [
     { title: "", icon: faHome, action: () => push("/") },
     { title: "Doações entregues", icon: null, action: () => push("/doacoes/entregues") },
     { title: "Acompanhar suas doações", icon: null, action: () => push("/doacoes/acompanhar") },
-    { title: "Virar entregador", icon: null, action: () => push("/virar-entregador") }
+    !user?.transporter_id ? { title: "Virar entregador", icon: null, action: () => push("/virar-entregador") } : {}
   ]
 
   if (pathname === '/login') return <></>
@@ -61,9 +67,9 @@ export default function NavBar() {
             <DropdownMenuContent className="w-40">
               <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>
                 <FontAwesomeIcon icon={faRightFromBracket} className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                <span>Sair da conta</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
