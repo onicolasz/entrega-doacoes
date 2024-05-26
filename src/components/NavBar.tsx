@@ -1,23 +1,45 @@
-'use client'
+"use client";
 
-import { useRouter } from "next/navigation"
+import { UserContext } from "@/app/contexts/user.context";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 export default function NavBar() {
-    const {push} = useRouter()
+  const { user } = useContext(UserContext)
+  const { push } = useRouter();
 
-    return <nav className="flex justify-center bg-green-700 h-10 items-center">
-        <span className="cursor-pointer mr-12 " onClick={() => push('/')}><strong>Home</strong></span>
+  return (
+    <div className="flex justify-center mt-4">
+      <nav className="flex justify-center bg-green-700 h-10 p-4 items-center text-white rounded-2xl">
         <ul className="flex h-full items-center">
-            <li className="h-full items-center flex self-center mr-4 cursor-pointer hover:bg-green-600"
-                onClick={() => push('/oferecer')}
+          <li
+            onClick={() => push("/")}
+            className="h-full items-center flex self-center rounded-2xl p-4 cursor-pointer hover:bg-green-600 hover:font-semibold"
+          >
+            Home
+          </li>
+          <li
+            className="h-full items-center flex self-center rounded-2xl p-4 cursor-pointer hover:bg-green-600 hover:font-semibold"
+            onClick={() => push("/doacoes/entregues")}
+          >
+            Doações entregues
+          </li>
+          <li
+            className="h-full items-center flex p-4 rounded-2xl cursor-pointer hover:bg-green-600 hover:font-semibold"
+            onClick={() => push("/doacoes/acompanhar")}
+          >
+            Acompanhar suas doações
+          </li>
+          {!user?.transporter_id && (
+            <li
+              className="h-full items-center flex p-4 rounded-2xl cursor-pointer hover:bg-green-600 hover:font-semibold"
+              onClick={() => push("/virar-entregador")}
             >
-                Oferecer serviços
+              Virar entregador
             </li>
-            <li className="h-full items-center flex cursor-pointer hover:bg-green-600"
-                onClick={() => push('/receber')}
-            >
-                Receber ajuda
-            </li>
+          )}
         </ul>
-    </nav>
+      </nav>
+    </div>
+  );
 }
