@@ -6,7 +6,15 @@ import { UserContext } from "./contexts/user.context";
 import { useContext, useState } from "react";
 import DonationCard from "@/components/DonationCard";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import DonationForm from "@/components/DonationForm";
 
 const data = [
@@ -55,7 +63,7 @@ export default function Home() {
           <p className="text-2xl text-black font-semibold py-4 pl-4">
             Esperando entregador
           </p>
-          <Dialog open={openCreateDonation}>
+          <Dialog>
             <DialogTrigger asChild>
               <Button
                 size="lg"
@@ -65,8 +73,17 @@ export default function Home() {
                 Criar Doação
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DonationForm></DonationForm>
+            <DialogContent className="sm:max-w-[1000px]">
+              <DialogHeader>
+                <DialogTitle>Criar Doação</DialogTitle>
+                {/* <DialogDescription>
+                  Make changes to your profile here. Click save when you're done.
+                </DialogDescription> */}
+              </DialogHeader>
+              <DonationForm />
+              <DialogFooter>
+                <Button type="submit" form="donation-form">Enviar</Button>
+              </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>

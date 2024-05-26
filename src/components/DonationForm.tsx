@@ -64,9 +64,8 @@ export default function DonationForm() {
 
   return (
     <main>
-      <h1 className="text-xl font-medium text-primary">Cadastro de Doações</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} id="donation-form" className="space-y-4">
           {fields.map((item, index) => (
             <div key={item.id} className="flex space-x-2 items-end">
               <div className="flex flex-col w-1/3">
@@ -176,12 +175,12 @@ export default function DonationForm() {
               <span>Adicionar Item</span>
             </Button>
           </div>
-          <Button
+          {/* <Button
             type="submit"
             className="block w-full py-2 px-4 rounded-md mt-4"
           >
             Enviar
-          </Button>
+          </Button> */}
         </form>
       </Form>
     </main>
