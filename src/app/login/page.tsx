@@ -8,12 +8,12 @@ export default function Login() {
   const { update } = useSession();
 
   return (
-    <main className="">
+    <main>
       <div className="flex h-screen">
-        <div className="flex-1 bg-primary flex items-center justify-center">
+        <div className="hidden lg:flex lg:flex-1 bg-primary items-center justify-center">
           {/* Lado verde */}
         </div>
-        <div className="relative flex-1 flex items-center justify-center">
+        <div className="flex flex-1 items-center justify-center">
           <div className="relative z-10 p-6 max-w-sm mx-auto rounded-xl shadow-md space-y-4">
             <h1 className="text-xl font-medium text-primary">Bem-Vindo</h1>
             <form className="space-y-4">
