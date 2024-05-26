@@ -3,6 +3,7 @@
 import { UserContext } from "@/app/contexts/user.context";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
+import ProfileButton from "./ProfileButton";
 
 export default function NavBar() {
   const { user } = useContext(UserContext)
@@ -10,7 +11,7 @@ export default function NavBar() {
 
   return (
     <div className="flex justify-center mt-4">
-      <nav className="flex justify-center bg-green-700 h-10 p-4 items-center text-white rounded-2xl">
+      <nav className="flex justify-center bg-green-700 h-10 p-4 items-center text-white rounded-2xl border-gradient">
         <ul className="flex h-full items-center">
           <li
             onClick={() => push("/")}
@@ -40,6 +41,7 @@ export default function NavBar() {
           )}
         </ul>
       </nav>
+      <ProfileButton></ProfileButton>
     </div>
   );
 }
