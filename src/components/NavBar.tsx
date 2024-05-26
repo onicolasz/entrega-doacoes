@@ -3,11 +3,15 @@
 import { UserContext } from "@/app/contexts/user.context";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
+import { usePathname } from 'next/navigation'
 import ProfileButton from "./ProfileButton";
 
 export default function NavBar() {
   const { user } = useContext(UserContext)
   const { push } = useRouter();
+  const pathname = usePathname()
+  
+  if( pathname === '/login') return <></>
 
   return (
     <div className="flex justify-center mt-4">
