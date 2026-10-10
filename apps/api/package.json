@@ -1,0 +1,45 @@
+{
+  "name": "@entrega/api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/apps/api/src/main.js",
+    "typecheck": "tsc --noEmit",
+    "test": "dotenv -e ../../.env -- tsx --test --test-concurrency=1 test/*.test.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "dotenv -e ../../.env -- prisma migrate deploy",
+    "db:seed": "dotenv -e ../../.env -- tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@entrega/contracts": "workspace:*",
+    "@nestjs/common": "^12.1.2",
+    "@nestjs/core": "^12.1.2",
+    "@nestjs/platform-express": "^12.1.2",
+    "@nestjs/swagger": "^12.0.0",
+    "@prisma/client": "6.19.3",
+    "@aws-sdk/client-s3": "^3.1000.0",
+    "@aws-sdk/s3-request-presigner": "^3.1000.0",
+    "bcryptjs": "^3.0.3",
+    "bullmq": "^5.70.0",
+    "dotenv": "^17.3.1",
+    "ioredis": "^5.9.3",
+    "jose": "^6.1.3",
+    "nodemailer": "^7.0.13",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.1",
+    "express-rate-limit": "^8.3.1",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "prisma": "6.19.3",
+    "tsx": "^4.21.0",
+    "dotenv-cli": "^11.0.0",
+    "@types/node": "^22.19.0",
+    "@types/nodemailer": "^7.0.11",
+    "@types/express": "^5.0.6"
+  }
+}

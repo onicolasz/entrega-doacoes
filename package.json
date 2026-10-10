@@ -1,47 +1,32 @@
 {
-  "name": "entrega-doacao",
-  "version": "0.1.0",
+  "name": "entrega-doacoes",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+  "packageManager": "pnpm@12.8.1",
+  "engines": {
+    "node": ">=22.18.0"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.5.2",
-    "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@hookform/resolvers": "^3.4.2",
-    "@prisma/client": "^5.14.0",
-    "@radix-ui/react-avatar": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-dropdown-menu": "^2.0.6",
-    "@radix-ui/react-label": "^2.0.2",
-    "@radix-ui/react-select": "^2.0.0",
-    "@radix-ui/react-separator": "^1.0.3",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@react-google-maps/api": "^2.19.3",
-    "@radix-ui/react-tooltip": "^1.0.7",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.379.0",
-    "next": "14.2.3",
-    "next-auth": "^4.24.7",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-hook-form": "^7.51.5",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.8"
+  "scripts": {
+    "dev": "pnpm --parallel --filter @entrega/api --filter @entrega/mobile dev",
+    "dev:api": "pnpm --filter @entrega/api dev",
+    "dev:mobile": "pnpm --filter @entrega/mobile dev",
+    "build": "pnpm --filter @entrega/contracts build && pnpm --filter @entrega/api build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "test": "pnpm --filter @entrega/api test",
+    "db:migrate": "pnpm --filter @entrega/api db:migrate",
+    "db:seed": "pnpm --filter @entrega/api db:seed",
+    "infra:up": "docker compose up -d --wait",
+    "infra:down": "docker compose down",
+    "postinstall": "pnpm --filter @entrega/contracts build && pnpm --filter @entrega/api db:generate",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "prisma": "^5.14.0",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "~6.0.3",
+    "eslint": "^9.39.1",
+    "typescript-eslint": "^8.56.0",
+    "@eslint/js": "^9.39.1",
+    "globals": "^16.5.0",
+    "prettier": "^3.8.1"
   }
 }

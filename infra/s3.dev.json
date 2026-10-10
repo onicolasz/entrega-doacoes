@@ -1,0 +1,14 @@
+{
+  "identities": [
+    {
+      "name": "entrega-development",
+      "credentials": [
+        {
+          "accessKey": "entrega",
+          "secretKey": "entrega-local-storage"
+        }
+      ],
+      "actions": ["Admin", "Read", "Write", "List", "Tagging"]
+    }
+  ]
+}
