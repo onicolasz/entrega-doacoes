@@ -49,7 +49,7 @@ export const statusLabels: Record<string, string> = {
 export const modes = ['ORG_PICKUP', 'DONOR_DELIVERY', 'EXTERNAL'] as const;
 export const modeLabels = {
   ORG_PICKUP: 'Retirada pela instituição',
-  DONOR_DELIVERY: 'Eu vou entregar',
+  DONOR_DELIVERY: 'Entrega pelo doador',
   EXTERNAL: 'Transporte externo da instituição',
 };
 const text = (max = 500) => z.string().trim().min(1, 'Preencha este campo').max(max);

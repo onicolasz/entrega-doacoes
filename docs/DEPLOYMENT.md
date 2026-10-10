@@ -39,6 +39,16 @@ Coloque a API e o armazenamento atrás de HTTPS. Em produção, configure o CORS
 
 O bucket deve existir ou as credenciais precisam permitir sua criação. O servidor verifica cada upload, transforma imagens em JPEG, remove metadados e limita o tamanho final a 1600 pixels. Comprovantes institucionais são vistos somente pelo representante e pela administração.
 
+## Primeiro administrador
+
+Cadastre e confirme o email do responsável pela operação. Em uma sessão administrativa do PostgreSQL dedicado ao app, promova somente essa conta, substituindo o email do exemplo:
+
+```sql
+UPDATE "User" SET "admin" = true WHERE "email" = 'responsavel@seu-dominio.com';
+```
+
+Ao entrar novamente no app, a aba Perfil exibirá **Administração**, com análise de instituições e denúncias. O seed de demonstração não deve ser utilizado para criar contas de produção.
+
 ## Builds Android e iOS
 
 O `eas.json` já inclui os perfis `development`, `preview` e `production`.

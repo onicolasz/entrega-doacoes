@@ -27,10 +27,8 @@ export function Photos({
   });
   async function pick(camera = false) {
     try {
-      const permission = camera
-        ? await Picker.requestCameraPermissionsAsync()
-        : await Picker.requestMediaLibraryPermissionsAsync();
-      if (!permission.granted) {
+      // The system photo picker grants access to the selected images only.
+      if (camera && !(await Picker.requestCameraPermissionsAsync()).granted) {
         if (Platform.OS === 'web')
           showError(new Error('Permita acesso às fotos ou à câmera no navegador.'));
         else

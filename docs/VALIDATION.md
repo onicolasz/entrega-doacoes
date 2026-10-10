@@ -40,3 +40,16 @@ Esta etapa exige aparelhos e os builds/credenciais do Expo, Android e Apple. Apr
 - Push: tocar no aviso com o app em primeiro plano, em segundo plano e fechado.
 - Email: abrir os links de confirmação e recuperação no aplicativo instalado.
 - Cancelamento: anúncio volta à busca e a instituição anterior perde o endereço de retirada.
+
+## Resultados em 10/10/2026
+
+- 16 testes de integração passaram com os quatro serviços locais reais.
+- Tipos, lint, formatação, compilação da API e exportação web passaram.
+- Expo Doctor: 21/21 verificações aprovadas; projetos nativos gerados por CNG. A geração Android também é verificada no CI.
+- Imagem Docker da API compilada e executada; `/v1/health` respondeu com sucesso.
+- Interface em 390 × 844 e 320 × 740: login, upload real de foto, cadastro em três etapas, oferta direta, conversa, reserva, horário confirmado, transporte e recebimento revisados.
+- Solicitação pela instituição e aceitação pelo doador verificadas pela interface.
+- Token de acesso inválido renovado automaticamente, preservando a tela atual.
+- Falha de rede durante envio: o texto permaneceu no campo, o erro apareceu e o reenvio após reconexão criou uma única mensagem.
+
+Os resultados de CI estão no [PR #1](https://github.com/onicolasz/entrega-doacoes/pull/1/checks). O checklist em aparelhos continua necessário para teclado, câmera física, ampliação de fontes e push FCM/APNs.
