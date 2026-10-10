@@ -70,6 +70,17 @@ pnpm dlx eas-cli build --profile production --platform all
 
 `development` usa o dev client e se conecta ao Metro. `preview` gera um APK Android instalado diretamente. Os perfis de teste permitem HTTP para desenvolvimento em rede local; `production` desativa isso. Builds iOS para dispositivos precisam da conta Apple e da assinatura/distribuição configuradas no EAS. O identificador inicial é `com.entregadoacoes.mobile` e pode ser ajustado antes de registrar o app nas lojas.
 
+## Builds disponíveis desta implementação
+
+Compilados pelo EAS em **10/10/2026**, com o perfil `development-simulator`:
+
+- Android: [baixar APK de desenvolvimento](https://expo.dev/artifacts/eas/WOhK0R1PzKX8Cyw4Sonr3pUgV-MLxGYx9I4u1nvHfjQ.apk) · [resultado da compilação](https://expo.dev/accounts/nicolasbarrosdesouza/projects/entrega-doacoes/builds/5b1b04cd-88cb-40ac-bafe-e8c7952be070).
+- iOS: [baixar pacote para simulador](https://expo.dev/artifacts/eas/TUukeirUs9oA6DXau_oYW6V73wMZRtJRVM6yC_UWzf0.tar.gz) · [resultado da compilação](https://expo.dev/accounts/nicolasbarrosdesouza/projects/entrega-doacoes/builds/5f3ce390-97cc-4574-80f9-afbf13e158c1).
+
+São development clients: precisam da API e do Metro ligados, usando a configuração de rede local descrita no README. O build Android também funciona em aparelhos; o pacote iOS serve apenas para o simulador. Para gerar um build iOS instalável no iPhone, use `development` e configure a assinatura Apple.
+
+Os dois builds foram gerados a partir do commit `319b24f`, que contém a configuração e os módulos nativos atuais. As alterações posteriores são JavaScript/documentação e são carregadas pelo Metro. Gere um novo build quando mudar módulos ou configurações nativas. A compilação foi validada no EAS; a revisão em aparelhos permanece no checklist de validação.
+
 ## Notificações
 
 1. Configure o ID real do projeto EAS e as credenciais FCM/APNs no projeto.

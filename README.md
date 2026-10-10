@@ -55,7 +55,7 @@ Para representar uma instituição, entre na conta correspondente e selecione a 
 
 ## Testar em um celular
 
-Use um development build, especialmente para câmera, notificações e comportamento de teclado. Expo Go não substitui a validação das notificações nativas.
+Os [builds de desenvolvimento Android e iOS para simulador](docs/DEPLOYMENT.md#builds-disponíveis-desta-implementação) já estão disponíveis. Use um development build, especialmente para câmera, notificações e comportamento de teclado. Expo Go não substitui a validação das notificações nativas.
 
 1. Coloque o computador e o celular na mesma rede.
 2. Em `apps/mobile/.env`, aponte `EXPO_PUBLIC_API_URL` para `http://IP_DO_COMPUTADOR:3333/v1`.
