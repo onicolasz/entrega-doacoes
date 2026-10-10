@@ -100,7 +100,7 @@ export default function DonationDetail() {
             <T>
               {d.street
                 ? `${d.street}, ${d.number}${d.complement ? ` · ${d.complement}` : ''}`
-                : `${d.neighborhood}, ${d.city}`}
+                : [d.neighborhood, d.city].filter(Boolean).join(', ')}
             </T>
             <T muted>{d.availability}</T>
             {d.instructions ? <T>{d.instructions}</T> : null}

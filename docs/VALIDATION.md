@@ -48,7 +48,8 @@ Esta etapa exige aparelhos e os builds/credenciais do Expo, Android e Apple. Apr
 - Expo Doctor: 21/21 verificações aprovadas; projetos nativos gerados por CNG. A geração Android também é verificada no CI.
 - Imagem Docker da API compilada e executada; `/v1/health` respondeu com sucesso.
 - Interface em 390 × 844 e 320 × 740: login, upload real de foto, cadastro em três etapas, oferta direta, conversa, reserva, horário confirmado, transporte e recebimento revisados.
-- Solicitação pela instituição e aceitação pelo doador verificadas pela interface.
+- Solicitação pela instituição: aceitação pelo doador, conversa, transporte externo com responsável/link, confirmação de horário e recebimento verificados pela interface. O link usado na revisão era demonstrativo; nenhum transporte foi contratado.
+- Rascunho local recuperado após recarregar o aplicativo, preservando título e descrição.
 - Token de acesso inválido renovado automaticamente, preservando a tela atual.
 - Falha de rede durante envio: o texto permaneceu no campo, o erro apareceu e o reenvio após reconexão criou uma única mensagem.
 

@@ -455,7 +455,7 @@ export function DonationCard({ item, onPress }: { item: DonationView; onPress: (
         <View style={styles.row}>
           <Icon name="location-outline" size={16} />
           <T variant="small" muted>
-            {item.neighborhood}, {item.city}
+            {[item.neighborhood, item.city].filter(Boolean).join(', ')}
             {item.distanceKm !== undefined ? ` · ${item.distanceKm} km` : ''}
           </T>
         </View>
