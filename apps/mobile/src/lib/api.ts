@@ -9,6 +9,17 @@ let sessionVersion = 0;
 let refreshPromise: Promise<void> | null = null;
 let listener: ((result: AuthResult | null) => void) | null = null;
 const KEY = 'entrega-session-v1';
+// React Native's AbortSignal polyfill does not expose the browser timeout() API.
+async function fetchWithTimeout(url: string, init: RequestInit = {}, milliseconds = 20000) {
+  if (init.signal) return fetch(url, init);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), milliseconds);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
 export class RequestError extends Error {
   constructor(
     message: string,
@@ -83,14 +94,14 @@ export async function request<T>(
 ): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(`${API_URL}${path}`, {
+    response = await fetchWithTimeout(`${API_URL}${path}`, {
       method: options.method || 'GET',
       headers: {
         ...(options.body !== undefined ? { 'Content-Type': 'application/json' } : {}),
         ...(credentials ? { Authorization: `Bearer ${credentials.accessToken}` } : {}),
       },
       ...(options.body !== undefined ? { body: JSON.stringify(options.body) } : {}),
-      signal: options.signal || AbortSignal.timeout(20000),
+      signal: options.signal,
     });
   } catch (error) {
     if (options.signal?.aborted) throw error;
@@ -118,12 +129,15 @@ export async function uploadPhoto(uri: string) {
     method: 'POST',
     body: { size: blob.size, contentType: 'image/jpeg' },
   });
-  const result = await fetch(ticket.url, {
-    method: 'PUT',
-    headers: ticket.headers,
-    body: blob,
-    signal: AbortSignal.timeout(60000),
-  });
+  const result = await fetchWithTimeout(
+    ticket.url,
+    {
+      method: 'PUT',
+      headers: ticket.headers,
+      body: blob,
+    },
+    60000,
+  );
   if (!result.ok) throw new RequestError('Não foi possível enviar a foto. Tente novamente.');
   await request(`/uploads/${ticket.id}/confirm`, { method: 'POST' });
   return ticket.key;
