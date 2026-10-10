@@ -40,6 +40,7 @@ const config: ExpoConfig = {
       {
         photosPermission: 'Selecione fotos para mostrar os itens que você quer doar.',
         cameraPermission: 'Tire fotos dos itens que você quer doar.',
+        microphonePermission: false,
       },
     ],
     [

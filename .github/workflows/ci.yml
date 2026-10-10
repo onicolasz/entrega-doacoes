@@ -33,6 +33,7 @@ jobs:
       - run: pnpm build
       - run: pnpm test
       - run: pnpm --filter @entrega/mobile exec expo-doctor
+      - run: pnpm --filter @entrega/mobile exec expo prebuild --platform android --no-install
       - run: pnpm --filter @entrega/mobile export:web
       - name: Service logs on failure
         if: failure()
