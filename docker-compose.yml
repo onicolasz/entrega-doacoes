@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: entrega
+      POSTGRES_PASSWORD: entrega
+      POSTGRES_DB: entrega
+    ports: ['56432:5432']
+    volumes: ['postgres_data:/var/lib/postgresql/data']
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U entrega -d entrega']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    ports: ['56379:6379']
+    volumes: ['redis_data:/data']
+    command: ['redis-server', '--appendonly', 'yes']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  storage:
+    image: chrislusf/seaweedfs:4.17
+    command: server -ip=storage -dir=/data -s3 -s3.port=8333 -s3.config=/etc/seaweedfs/s3.json -volume.max=12 -master.volumeSizeLimitMB=128
+    ports: ['59000:8333']
+    volumes:
+      - storage_data:/data
+      - ./infra/s3.dev.json:/etc/seaweedfs/s3.json:ro
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'wget -q -O /dev/null http://storage:9333/cluster/status && nc -z storage 8333',
+        ]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  mailpit:
+    image: axllent/mailpit:v1.27
+    ports: ['51025:1025', '58025:8025']
+volumes:
+  postgres_data:
+  redis_data:
+  storage_data:

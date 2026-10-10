@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model User {
+  id String @id @default(uuid()) @db.Uuid
+  email String @unique
+  name String
+  passwordHash String
+  verifiedAt DateTime? @db.Timestamptz
+  admin Boolean @default(false)
+  blockedAt DateTime? @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+  sessions Session[]
+  tokens AuthToken[]
+  memberships Membership[]
+  donations Donation[]
+  messages Message[]
+  devices Device[]
+  notices Notice[]
+  reports Report[]
+  uploads Upload[]
+}
+model Session {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String @unique
+  expiresAt DateTime @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+  @@index([userId])
+}
+model AuthToken {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String @unique
+  purpose String
+  expiresAt DateTime @db.Timestamptz
+  @@index([userId])
+}
+model Organization {
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  kind String
+  description String
+  email String
+  phone String
+  cnpj String?
+  evidence String
+  evidenceKeys String[] @default([])
+  city String
+  state String
+  neighborhood String
+  street String
+  number String
+  complement String @default("")
+  latitude Float?
+  longitude Float?
+  photoKeys String[]
+  categories String[]
+  needs String
+  status String @default("PENDING")
+  reviewNote String?
+  createdAt DateTime @default(now()) @db.Timestamptz
+  memberships Membership[]
+  interests Interest[]
+  @@index([status, city])
+}
+model Membership {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  organizationId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+}
+model Donation {
+  id String @id @default(uuid()) @db.Uuid
+  donorId String @db.Uuid
+  donor User @relation(fields: [donorId], references: [id])
+  title String
+  description String
+  category String
+  condition String
+  quantity Int
+  photoKeys String[]
+  city String
+  state String
+  neighborhood String
+  street String
+  number String
+  complement String @default("")
+  instructions String @default("")
+  availability String
+  latitude Float?
+  longitude Float?
+  status String @default("DRAFT")
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @updatedAt @db.Timestamptz
+  interests Interest[]
+  @@index([status, city, category, createdAt])
+  @@index([donorId, createdAt])
+}
+model Interest {
+  id String @id @default(uuid()) @db.Uuid
+  donationId String @db.Uuid
+  organizationId String @db.Uuid
+  donation Donation @relation(fields: [donationId], references: [id])
+  organization Organization @relation(fields: [organizationId], references: [id])
+  direction String
+  status String @default("PENDING")
+  createdAt DateTime @default(now()) @db.Timestamptz
+  messages Message[]
+  match Match?
+  @@index([donationId])
+  @@index([organizationId, status])
+}
+model Match {
+  id String @id @default(uuid()) @db.Uuid
+  interestId String @unique @db.Uuid
+  interest Interest @relation(fields: [interestId], references: [id])
+  status String @default("RESERVED")
+  createdAt DateTime @default(now()) @db.Timestamptz
+  appointments Appointment[]
+}
+model Appointment {
+  id String @id @default(uuid()) @db.Uuid
+  matchId String @db.Uuid
+  match Match @relation(fields: [matchId], references: [id])
+  proposedBy String @db.Uuid
+  scheduledAt DateTime @db.Timestamptz
+  mode String
+  responsible String
+  trackingUrl String?
+  note String @default("")
+  status String @default("PROPOSED")
+  createdAt DateTime @default(now()) @db.Timestamptz
+  @@index([matchId, createdAt])
+}
+model Message {
+  id String @id @default(uuid()) @db.Uuid
+  interestId String @db.Uuid
+  interest Interest @relation(fields: [interestId], references: [id])
+  senderId String @db.Uuid
+  sender User @relation(fields: [senderId], references: [id])
+  body String
+  clientId String @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz
+  @@unique([senderId, clientId])
+  @@index([interestId, createdAt, id])
+}
+model Upload {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id])
+  key String @unique
+  contentType String
+  size Int
+  confirmedAt DateTime? @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+  @@index([userId])
+}
+model Device {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token String @unique
+  @@index([userId])
+}
+model Notice {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title String
+  body String
+  path String
+  readAt DateTime? @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+  @@index([userId, createdAt])
+}
+model Outbox {
+  id String @id @default(uuid()) @db.Uuid
+  userIds String[]
+  title String
+  body String
+  path String
+  sentAt DateTime? @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+  @@index([sentAt, createdAt])
+}
+model Report {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id])
+  targetType String
+  targetId String @db.Uuid
+  reason String
+  status String @default("OPEN")
+  resolution String?
+  createdAt DateTime @default(now()) @db.Timestamptz
+  @@index([userId])
+  @@index([status, createdAt])
+}
